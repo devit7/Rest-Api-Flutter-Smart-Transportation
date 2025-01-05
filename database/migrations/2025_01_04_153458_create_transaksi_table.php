@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_user');
             $table->unsignedBigInteger('id_jadwal');
             $table->enum('status', ['success', 'cancel']);
+            $table->enum('statusPenumpang', ['in', 'out'])->default('in');
             $table->dateTime('tanggalTransaksi');
             $table->timestamps();
 

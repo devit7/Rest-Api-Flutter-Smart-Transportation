@@ -90,6 +90,7 @@ class TransaksiController extends Controller
             'id_user' => 'required|exists:users,id',
             'id_jadwal' => 'required|exists:jadwal,id',
             'status' => 'required',
+            'statusPenumpang' => 'required|in:in,out',
             'tanggalTransaksi' => 'required',
         ]);
 
@@ -97,6 +98,7 @@ class TransaksiController extends Controller
             'id_user' => $transaksiValidated['id_user'],
             'id_jadwal' => $transaksiValidated['id_jadwal'],
             'status' => $transaksiValidated['status'],
+            'statusPenumpang' => $transaksiValidated['statusPenumpang'],
             'tanggalTransaksi' => $transaksiValidated['tanggalTransaksi'],
         ]);
 

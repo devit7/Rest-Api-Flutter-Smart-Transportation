@@ -39,6 +39,7 @@ class TransaksiResource extends Resource
                 TextColumn::make('user.name'),
                 TextColumn::make('id_jadwal'),
                 TextColumn::make('status'),
+                TextColumn::make('statusPenumpang'),
                 TextColumn::make('tanggalTransaksi'),
             ])
             ->filters([
