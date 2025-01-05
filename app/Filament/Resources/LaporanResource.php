@@ -40,7 +40,7 @@ class LaporanResource extends Resource
                 TextColumn::make('user.name'),
                 TextColumn::make('judul'),
                 TextColumn::make('deskripsi'),
-                TextColumn::make('tanggal'),
+                TextColumn::make('tanggal')->sortable(),
                 ImageColumn::make('file_media')
                     ->disk('public')
             ])
@@ -48,7 +48,8 @@ class LaporanResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                //Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

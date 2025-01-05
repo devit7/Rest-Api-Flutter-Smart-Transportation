@@ -5,6 +5,7 @@ namespace App\Filament\Resources\TransaksiResource\Pages;
 use App\Filament\Resources\TransaksiResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
+use Filament\Tables\Table;
 
 class ListTransaksis extends ListRecords
 {
@@ -13,7 +14,11 @@ class ListTransaksis extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            //Actions\CreateAction::make(),
         ];
+    }
+    protected function makeTable(): Table
+    {
+        return parent::makeTable()->recordUrl(null);
     }
 }

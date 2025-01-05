@@ -6,6 +6,9 @@ use App\Filament\Resources\JadwalResource\Pages;
 use App\Filament\Resources\JadwalResource\RelationManagers;
 use App\Models\Jadwal;
 use Filament\Forms;
+use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -25,6 +28,15 @@ class JadwalResource extends Resource
         return $form
             ->schema([
                 //
+                Select::make('id_halte')
+                    ->label('Halte')
+                    ->relationship('halte', 'namaHalte')
+                    ->required(),
+                Select::make('id_bus')
+                    ->label('Bus')
+                    ->relationship('bus', 'namaBus')
+                    ->required(),
+                DateTimePicker::make('waktuBerangkat')
             ]);
     }
 
@@ -38,14 +50,16 @@ class JadwalResource extends Resource
                     ->searchable(),
                 TextColumn::make('halte.namaHalte'),
                 TextColumn::make('bus.namaBus'),
-                TextColumn::make('waktuBerangkat'),
+                TextColumn::make('waktuBerangkat')->sortable()
+                ->searchable(),
 
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                //Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

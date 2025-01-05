@@ -6,6 +6,7 @@ use App\Filament\Resources\HalteResource\Pages;
 use App\Filament\Resources\HalteResource\RelationManagers;
 use App\Models\Halte;
 use Filament\Forms;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -25,6 +26,12 @@ class HalteResource extends Resource
         return $form
             ->schema([
                 //
+                TextInput::make('namaHalte')
+                    ->label('Nama Halte')
+                    ->required(),
+                TextInput::make('lokasiHalte')
+                    ->label('Lokasi Halte')
+                    ->required(),
             ]);
     }
 
@@ -37,14 +44,16 @@ class HalteResource extends Resource
                     ->sortable()
                     ->searchable(),
 
-                TextColumn::make('namaHalte'),
-                TextColumn::make('lokasihalte'),
+                TextColumn::make('namaHalte')->sortable()
+                ->searchable(),
+                TextColumn::make('lokasiHalte'),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                //Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
