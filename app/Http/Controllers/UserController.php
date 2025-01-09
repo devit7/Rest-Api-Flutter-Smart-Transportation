@@ -59,9 +59,9 @@ class UserController extends Controller
             'name' => $userValidated['name'],
             'email' => $userValidated['email'],
             'password' => bcrypt($userValidated['password']),
-            'noTelp' => $userValidated['noTelp'],
-            'alamat' => $userValidated['alamat'],
-            'img' => $userValidated['img']
+            'noTelp' => $userValidated['noTelp'] ?? null,
+            'alamat' => $userValidated['alamat'] ?? null,
+            'img' => $userValidated['img'] ?? null
         ]);
         
         return response()->json([
@@ -96,35 +96,40 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
-
+//dd($request->all());
         $userValidated = $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users,email,' . $user->id,
             'noTelp' => 'nullable',
             'alamat' => 'nullable',
             'img' => 'nullable'
-        ]);
+        ],
+        [
+            'email.unique' => 'Email sudah terdaftar'
+        ]
+    );
 
+        $img = $user->img;
         //fileupload
         if ($request->hasFile('img')) {
             $file = $request->file('img');
             $filename = time() . '.' . $file->getClientOriginalExtension();
             $file->storePubliclyAs('user', $filename, 'public');
-            $userValidated['img'] = 'user/' . $filename;
+            $img = 'user/' . $filename;
 
             //hapus file lama
             if ($user->img) {
                 Storage::delete('public/' . $user->img);
             }
         }
+        //dd($img);
 
         $user->update([
             'name' => $userValidated['name'],
             'email' => $userValidated['email'],
-            'noTelp' => $userValidated['noTelp'],
-            'alamat' => $userValidated['alamat'],
-            'img' => $userValidated['img']
+            'noTelp' => $request->noTelp ? $request->noTelp : $user->noTelp,
+            'alamat' => $request->alamat ? $request->alamat : $user->alamat,
+            'img' => $img
         ]);
 
         return response()->json([

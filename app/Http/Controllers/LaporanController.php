@@ -63,7 +63,7 @@ class LaporanController extends Controller
             'judul' => $laporanValidated['judul'],
             'deskripsi' => $laporanValidated['deskripsi'],
             'tanggal' => $laporanValidated['tanggal'],
-            'file_media' => $laporanValidated['file_media'],
+            'file_media' => $laporanValidated['file_media'] ?? null,
             'id_user' => $laporanValidated['id_user'],
         ]);
 
@@ -110,12 +110,13 @@ class LaporanController extends Controller
             'id_user' => 'required|exists:users,id',
         ]);
 
+        $file_media = $laporan->file_media;
         //fileupload
         if ($request->hasFile('file_media')) {
             $file = $request->file('file_media');
             $filename = time() . '.' . $file->getClientOriginalExtension();
             $file->storePubliclyAs('laporan', $filename, 'public');
-            $laporanValidated['file_media'] = 'laporan/' . $filename;
+            $file_media = 'laporan/' . $filename;
 
             //delete old file
             Storage::delete('public/' . $laporan->file_media);
@@ -125,7 +126,7 @@ class LaporanController extends Controller
             'judul' => $laporanValidated['judul'],
             'deskripsi' => $laporanValidated['deskripsi'],
             'tanggal' => $laporanValidated['tanggal'],
-            'file_media' => $laporanValidated['file_media'],
+            'file_media' => $file_media,
             'id_user' => $laporanValidated['id_user'],
         ]);
 

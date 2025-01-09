@@ -22,4 +22,6 @@ class Transaksi extends Model
     {
         return $this->belongsTo(Jadwal::class, 'id_jadwal', 'id');
     }
+
+
 }

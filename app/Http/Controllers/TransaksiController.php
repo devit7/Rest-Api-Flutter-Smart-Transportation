@@ -18,7 +18,7 @@ class TransaksiController extends Controller
 
         return response()->json([
             'message' => 'success',
-            'data' => Transaksi::with('user', 'bus', 'jadwal')->get()
+            'data' => Transaksi::with( 'user','jadwal.bus','jadwal.halte')->get()
         ]);
     }
 
@@ -67,6 +67,16 @@ class TransaksiController extends Controller
         return response()->json([
             'message' => 'success',
             'data' => $transaksi
+        ]);
+    }
+
+    public function showByUser($id)
+    {
+        //
+
+        return response()->json([
+            'message' => 'success',
+            'data' => Transaksi::where('id_user', $id)->with('user', 'jadwal.bus', 'jadwal.halte')->get()
         ]);
     }
 

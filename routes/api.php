@@ -33,3 +33,4 @@ Route::apiResource('/bus', BusController::class);
 Route::apiResource('/halte', HalteController::class);
 Route::apiResource('/jadwal', JadwalController::class);
 Route::apiResource('/transaksi', TransaksiController::class);
+Route::get('/transaksi/user/{id}', [TransaksiController::class, 'showByUser']);
